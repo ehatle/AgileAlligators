@@ -31,6 +31,7 @@ var trackerCapture = angular.module('trackerCapture',
 .config(function($httpProvider, $routeProvider, $translateProvider) {    
             
     $httpProvider.defaults.useXDomain = true;
+
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
     
     $routeProvider.when('/', {
