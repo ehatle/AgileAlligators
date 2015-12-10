@@ -470,6 +470,12 @@ trackerCapture.controller('DataEntryController',
         $scope.displayCustomForm = !$scope.displayCustomForm;
     };
 
+    /*$scope.hasRelevantData = function (o, current) {
+        for(var prop in current) {
+            if()
+        }
+        return false;
+    }*/
     $scope.getDataEntryForm = function () {
         $scope.currentStage = $scope.stagesById[$scope.currentEvent.programStage];
         $scope.currentStageEvents = $scope.eventsByStage[$scope.currentEvent.programStage];
@@ -480,8 +486,14 @@ trackerCapture.controller('DataEntryController',
             if ($scope.currentEvent.event === $scope.allEventsSorted[i].event) {
                 break;
             } else
+
                 $scope.previousEvents.push($scope.allEventsSorted[i]);
         }
+
+        console.log("currentEvent");
+        console.log($scope.currentEvent);
+        console.log("previousEvents");
+        console.log(previousEvents);
         
         angular.forEach($scope.currentStage.programStageSections, function (section) {
             section.open = true;
