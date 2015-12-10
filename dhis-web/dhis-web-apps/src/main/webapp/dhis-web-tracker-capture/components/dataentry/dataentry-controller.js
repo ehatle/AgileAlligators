@@ -1,3 +1,4 @@
+/*asd*/
 /* global angular, trackerCapture */
 
 trackerCapture.controller('DataEntryController',
@@ -219,6 +220,7 @@ trackerCapture.controller('DataEntryController',
         $rootScope.ruleeffects = {};
         $scope.prStDes = [];
         $scope.allProgramRules = [];
+        $scope.previousStages = [];
 
         var selections = CurrentSelection.get();
         $scope.selectedOrgUnit = SessionStorageService.get('SELECTED_OU');
@@ -414,7 +416,6 @@ trackerCapture.controller('DataEntryController',
 
     $scope.showDataEntry = function (event, rightAfterEnrollment) {
         if (event) {
-
             Paginator.setItemCount($scope.eventsByStage[event.programStage].length);
             Paginator.setPage($scope.eventsByStage[event.programStage].indexOf(event));
             Paginator.setPageCount(Paginator.getItemCount());
@@ -470,10 +471,18 @@ trackerCapture.controller('DataEntryController',
     };
 
     $scope.getDataEntryForm = function () {
-
         $scope.currentStage = $scope.stagesById[$scope.currentEvent.programStage];
         $scope.currentStageEvents = $scope.eventsByStage[$scope.currentEvent.programStage];
 
+        $scope.previousEvents = [];
+
+        for (var i = 0; i < $scope.allEventsSorted.length; i++) {
+            if ($scope.currentEvent.event === $scope.allEventsSorted[i].event) {
+                break;
+            } else
+                $scope.previousEvents.push($scope.allEventsSorted[i]);
+        }
+        
         angular.forEach($scope.currentStage.programStageSections, function (section) {
             section.open = true;
         });
