@@ -49,25 +49,25 @@
                 <tbody>
                     <tr>
                         <td ng-repeat="stage in programStages">
-                            <div class="inline-block" ng-repeat="dhis2Event in eventsByStage[stage.id]">
+                            <div class="inline-block" ng-repeat="dhis2Event in eventsByStageAsc[stage.id]">
                                 <div class="event-container" 
                                      ng-class="getEventStyle(dhis2Event)" 
                                      ng-show="!currentPeriod[stage.id] || !filterEvents || currentPeriod[stage.id] && currentPeriod[stage.id].event === dhis2Event.event"
                                      ng-click="showDataEntry(dhis2Event, false)">
                                     {{dhis2Event.orgUnitName}}<br/>
                                     {{dhis2Event.sortingDate}}<br>
-                                    <span ng-if="eventsByStage[stage.id].length > 1 && !filterEvents">[{{eventsByStage[stage.id].length - $index}}]</span>
+                                    <span ng-if="eventsByStageAsc[stage.id].length > 1 && !filterEvents">[{{$index + 1}}]</span>
                                 </div>
                             </div>
-                            <span ng-if="eventsByStage[stage.id].length > 1 && filterEvents">
+                            <span ng-if="eventsByStageAsc[stage.id].length > 1 && filterEvents">
                                 <span ng-if="currentEvent.programStage !== stage.id">
                                     <div class="event-paging">
-                                        <a href class="event-paging" ng-click="showDataEntryForEvent(eventsByStage[stage.id][0])">{{'show_more'| translate}}</a>
+                                        <a href class="event-paging" ng-click="showDataEntryForEvent(eventsByStageAsc[stage.id][0])">{{'show_more'| translate}}</a>
                                     </div>                                    
                                 </span>
                                 <event-paginator ng-if="stage.id === currentEvent.programStage"></event-paginator>                             
                             </span>
-                            <div ng-if="!eventsByStage[stage.id] || eventsByStage[stage.id].length < 1">
+                            <div ng-if="!eventsByStageAsc[stage.id] || eventsByStageAsc[stage.id].length < 1">
                                 <div class="alert alert-warning">{{'no_events_exist'| translate}}</div> 
                             </div>
                         </td>
@@ -169,14 +169,14 @@
                        class="btn btn-success"
                        ng-disabled="currentEvent.enrollmentStatus !== 'ACTIVE' || currentEvent.editingNotAllowed || currentEvent.orgUnit !== selectedOrgUnit.id"
                        ng-if="currentEvent.eventDate">{{'validate'| translate}}</a>
-                    <a href ng-click="completeIncompleteEvent()" 
+                    <a href ng-click="completeIncompleteEvent()"
                        class="btn btn-warning" 
-                       ng-disabled="currentEvent.enrollmentStatus !== 'ACTIVE' || currentEvent.editingNotAllowed || currentEvent.orgUnit !== selectedOrgUnit.id"
+                       ng-disabled="validated === 'false' || currentEvent.enrollmentStatus !== 'ACTIVE' || currentEvent.editingNotAllowed || currentEvent.orgUnit !== selectedOrgUnit.id"
                        ng-if="currentEvent.eventDate && (currentEvent.status === 'SCHEDULE' || currentEvent.status === 'ACTIVE' || currentEvent.status === 'VISITED')">{{'complete'| translate}}</a>
                     <a href ng-click="completeIncompleteEvent()" 
                        class="btn btn-warning"
                        ng-disabled="currentEvent.enrollmentStatus !== 'ACTIVE' || currentEvent.editingNotAllowed && currentEvent.status !== 'COMPLETED' || currentEvent.orgUnit !== selectedOrgUnit.id"
-                       ng-if="currentEvent.eventDate && currentEvent.status === 'COMPLETED'">{{'incomplete'| translate}}</a>
+                       ng-if="currentEvent.eventDate && currentEvent.status === 'COMPLETED'">{{'revoke'| translate}}</a>
                     <a href ng-click="skipUnskipEvent()"
                        class="btn btn-warning" 
                        ng-disabled="currentEvent.enrollmentStatus !== 'ACTIVE' || currentEvent.editingNotAllowed || currentEvent.orgUnit !== selectedOrgUnit.id"
