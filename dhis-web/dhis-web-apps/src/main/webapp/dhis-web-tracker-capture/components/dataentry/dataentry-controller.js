@@ -45,7 +45,6 @@ trackerCapture.controller('DataEntryController',
     $scope.warningMessages = {};
     $scope.hiddenSections = {};
     $scope.tableMaxNumberOfDataElements = 10;
-    $scope.validated = 'false';
     
     //Labels
     $scope.dataElementLabel = $translate.instant('data_element');
@@ -527,7 +526,6 @@ trackerCapture.controller('DataEntryController',
     };
 
     $scope.saveDatavalue = function (prStDe, field) {
-        $scope.validated = 'false';
         $scope.saveDatavalueForEvent(prStDe, field, $scope.currentEvent);
     };
 
@@ -952,11 +950,6 @@ trackerCapture.controller('DataEntryController',
                 continueLoop = false;
             }
         }
-    };
-
-    $scope.validateEvent = function () {
-        console.log($scope.currentEvent);
-        $scope.validated = 'true';
     };
 
     $scope.deleteEvent = function () {
